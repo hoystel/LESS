@@ -1,0 +1,133 @@
+@background-color: #ff0000;
+@text-color: #1A237E;
+
+p{
+  background-color: @background-color;
+  color: @text-color;
+  padding: 15px;
+}
+
+ul{
+  background-color: @background-color;
+}
+
+li{
+  color: @text-color;
+}
+
+/* MIXINS - RE USING STYLES - HIDE ORIGINAL USING () - CAN ALSO PASS IN VARIABLES */
+
+#circle(@size: 25px){
+  background-color: #4CAF50;
+  border-radius: 100%;
+  width: @size;
+  height: @size;
+}
+
+#small-circle{
+  #circle
+}
+
+#big-circle{
+  #circle(100px)
+}
+
+/* NESTING AND SCOPE */
+@text-color: #000000;
+
+ul{
+  @text-color: #fff;
+  background-color: #03A9F4;
+  padding: 10px;
+  list-style: none;
+
+  li{
+    color: @text-color;
+    border-radius: 3px;
+    margin: 10px 0;
+  }
+}
+
+/* LESS CAN DO OPERATORS - ALWAYS KNOWS THE TYPE */
+@div-width: 100px;
+@color: #03A9F4;
+
+div{
+  height: 50px;
+  display: inline-block;
+}
+
+#left{
+  width: @div-width;
+  background-color: @color - 100;
+}
+
+#right{
+  width: @div-width * 2;
+  background-color: @color;
+}
+
+/* FUNCTIONS */
+@var: #004590;
+
+#custom{
+  height: 50px;
+  width: 50px;
+  background-color: @var;
+
+  &:hover{
+    background-color: fadeout(@var, 30%)
+  }
+}
+
+
+/* Namespaces */
+#outer {
+  .inner {
+    color: red;
+  }
+}
+
+#altName{
+	.inner{
+		color:pink;
+	}
+}
+
+.c {
+  #outer > .inner;
+}
+
+.b{
+   #altName > .inner;
+}
+
+/* Important classes */
+.foo (@bg: #f5f5f5, @color: #900) {
+  background: @bg;
+  color: @color;
+}
+.unimportant {
+  .foo();
+}
+.important {
+  .foo() !important;
+}
+
+/* PARAMETRIC MIXIN EXAMPLE */
+.rounded_top(@radius) {   
+    -webkit-border-top-left-radius: @radius;
+    -webkit-border-top-right-radius: @radius;   
+    -moz-border-radius-topleft: @radius;
+    -moz-border-radius-topright: @radius;
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
+}
+.tab {
+    background: #333;   
+    color:#fff;
+    .rounded_top(6px);
+}
+.submit {
+    .rounded_top(3px);
+}
